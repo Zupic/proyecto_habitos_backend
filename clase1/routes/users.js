@@ -42,10 +42,12 @@ router.post('/login', async function (req, res, next) {
 
     //Generar un JWT para la sesión 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
+    const isProduction = process.env.NODE_ENV === 'production'; //según la variable de entorno
+
     res.cookie('habitToken', token, {
       httpOnly: false, // Previene acceso desde JavaScript (XSS)
-      secure: false, // Solo en HTTPS en producción
-      sameSite: "lax", // Evita envío en otros sitios
+      secure: isProduction, // Solo en HTTPS en producción
+      sameSite: isProduction ? 'none' : "lax", // Evita envío en otros sitios lax, todo se envia desde el mismo sitio 
       maxAge: 7 * (24) * 60 * 60 * 1000 // 7 días de duración
     });
     res.json({ message: "Inicio de sesión exitoso", token });

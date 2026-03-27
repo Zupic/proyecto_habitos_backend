@@ -47,7 +47,7 @@ router.post('/login', async function (req, res, next) {
     res.cookie('habitToken', token, {
       httpOnly: false, // Previene acceso desde JavaScript (XSS)
       secure: isProduction, // Solo en HTTPS en producción
-      sameSite: isProduction ? 'none' : "lax", // Evita envío en otros sitios lax, todo se envia desde el mismo sitio 
+      sameSite: isProduction ? 'none' : 'lax', // Evita envío en otros sitios lax, todo se envia desde el mismo sitio 
       maxAge: 7 * 24 * 60 * 60 * 1000 // 7 días de duración
     });
     res.json({ message: "Inicio de sesión exitoso", token });

@@ -24,7 +24,7 @@ router.post('/register', async function (req, res, next) {
     res.status(201).json({ message: "Usuario registrado correctamente" });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "Error en el registro", "description": error.toString() });
+      res.status(500).json({ error: "Error en el registro", "description":error.toString() });
   }
 });
 
@@ -50,12 +50,12 @@ router.post('/login', async function (req, res, next) {
       sameSite: isProduction ? 'none' : 'lax', // Evita envío en otros sitios lax, todo se envia desde el mismo sitio 
       maxAge: 7 * 24 * 60 * 60 * 1000 // 7 días de duración
     });
-    res.json({ message: "Inicio de sesión exitoso", token });
+
+      res.json({ message: "Inicio de sesión exitoso", token });
   } catch (error) {
-    res.status(500).json({ error: "Error en el login", "description": error.toString() });
+      res.status(500).json({ error: "Error en el login", "description":error.toString() });
   }
 });
-
 module.exports = router;
 
 

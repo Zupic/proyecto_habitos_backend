@@ -24,7 +24,7 @@ router.post('/register', async function (req, res, next) {
     res.status(201).json({ message: "Usuario registrado correctamente" });
   } catch (error) {
     console.log(error);
-      res.status(500).json({ error: "Error en el registro", "description":error.toString() });
+    res.status(500).json({ error: "Error en el registro", "description": error.toString() });
   }
 });
 
@@ -42,20 +42,19 @@ router.post('/login', async function (req, res, next) {
 
     //Generar un JWT para la sesión 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
-    const isProduction = process.env.NODE_ENV === 'production'; //según la variable de entorno
+    const isProduction = process.env.NODE_ENV === 'production';
+    //según la variable de entorno
 
-    res.cookie('habitToken', token, {
-      httpOnly: false, // Previene acceso desde JavaScript (XSS)
+    res.cookie("habitToken", token, {
+      httpOnly: false, // Previene acceso desde JavaScript 
       secure: isProduction, // Solo en HTTPS en producción
       sameSite: isProduction ? 'none' : 'lax', // Evita envío en otros sitios lax, todo se envia desde el mismo sitio 
       maxAge: 7 * 24 * 60 * 60 * 1000 // 7 días de duración
     });
 
-      res.json({ message: "Inicio de sesión exitoso", token });
-  } catch (error) {
-      res.status(500).json({ error: "Error en el login", "description":error.toString() });
-  }
+    res.json({ message: "Inicio de sesión exitoso", token });
+ } catch (error) {
+    res.status(500).json({ error: "Error en el login", "description": error.toString() });
+}
 });
 module.exports = router;
-
-
